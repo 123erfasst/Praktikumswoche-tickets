@@ -114,7 +114,7 @@ class _GameScreenState extends State<GameScreen> {
                         alignment: Alignment.bottomCenter,
                         child: FittedBox(
                           child: Image.asset(
-                            'res/images/0${game.getWrongGuesses()}.png',
+                            'res/images/${game.getWrongGuesses()}.png',
                             height: 1001,
                             width: 991,
                             gaplessPlayback: true,
