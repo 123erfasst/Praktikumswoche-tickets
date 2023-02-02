@@ -3,11 +3,10 @@ import 'dart:math';
 import 'package:hangman/utilities/constants.dart';
 
 class Game {
-  int wrongies = 0;
-  int righties = 0;
+  int wrongGuesses = 0;
+  int rightGuesses = 0;
   static int wordNumber = 0;
-  int i = 0;
-  static List<String> worties = [
+  static List<String> woerterListe = [
     "hangman",
     "hallo",
     "partyhuetchen",
@@ -18,54 +17,46 @@ class Game {
     "dorfplatzschießuebung"
   ];
 
-  static String wordi = worties[wordNumber];
-  List<String> singul = wordi.split('').toSet().toList();
+  static String rateWort = woerterListe[wordNumber];
+  List<String> wortOhneDuplikate = rateWort.split('').toSet().toList();
 
   void buttonPressed(int index) {
-    print(singul);
-    print(righties);
-    print(singul.length);
-    if (wordi.contains(alphabet[index])) {
-      righties++;
+    if (rateWort.contains(alphabet[index])) {
+      rightGuesses++;
     } else {
-      wrongies++;
+      wrongGuesses++;
     }
   }
 
   String getNewWord() {
-    i++;
-
-    return worties[wordNumber];
+    return woerterListe[wordNumber];
   }
 
   bool isWon() {
-    if (singul.length <= righties) {
+    if (wortOhneDuplikate.length <= rightGuesses) {
       nextGame();
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   bool isLost() {
-    if (wrongies >= 6) {
+    if (wrongGuesses >= 6) {
       nextGame();
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   int getWrongGuesses() {
-    return wrongies;
+    return wrongGuesses;
   }
 
   nextGame() {
-    print("nextgame");
     wordNumber++;
-    wordi = worties[wordNumber];
-    singul = wordi.split('').toSet().toList();
-    righties = 0;
-    wrongies = 0;
+    rateWort = woerterListe[wordNumber];
+    wortOhneDuplikate = rateWort.split('').toSet().toList();
+    rightGuesses = 0;
+    wrongGuesses = 0;
   }
 }
