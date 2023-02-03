@@ -14,7 +14,7 @@ class Game {
     "boxkampfjuryschuetzlinge",
     "oxydschmelzpunktfarbig",
     "plueschfigurwandobjekt",
-    "dorfplatzschießuebung"
+    "dorfplatzschiessuebung"
   ];
 
   static String rateWort = woerterListe[wordNumber];
@@ -29,12 +29,21 @@ class Game {
   }
 
   String getNewWord() {
-    return woerterListe[wordNumber];
+    rightGuesses = 0;
+    wrongGuesses = 0;
+    List<String> nochZuerrateneWoerter = List.from(woerterListe);
+
+    nochZuerrateneWoerter.remove(rateWort);
+
+    rateWort =
+        nochZuerrateneWoerter[Random().nextInt(nochZuerrateneWoerter.length)];
+    wortOhneDuplikate = rateWort.split('').toSet().toList();
+
+    return rateWort;
   }
 
   bool isWon() {
     if (wortOhneDuplikate.length <= rightGuesses) {
-      nextGame();
       return true;
     }
     return false;
@@ -42,7 +51,6 @@ class Game {
 
   bool isLost() {
     if (wrongGuesses >= 6) {
-      nextGame();
       return true;
     }
     return false;
@@ -50,13 +58,5 @@ class Game {
 
   int getWrongGuesses() {
     return wrongGuesses;
-  }
-
-  nextGame() {
-    wordNumber++;
-    rateWort = woerterListe[wordNumber];
-    wortOhneDuplikate = rateWort.split('').toSet().toList();
-    rightGuesses = 0;
-    wrongGuesses = 0;
   }
 }
